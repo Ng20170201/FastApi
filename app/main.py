@@ -17,3 +17,19 @@ app = FastAPI(
 # Include routes from the controller
 app.include_router(controller_router)
 
+# MongoDB lifecycle events
+try:
+    from .db import connect_to_mongo, close_mongo_connection
+except Exception:
+    from db import connect_to_mongo, close_mongo_connection
+
+
+@app.on_event("startup")
+async def startup_db_client():
+    await connect_to_mongo(app)
+
+
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    await close_mongo_connection(app)
+

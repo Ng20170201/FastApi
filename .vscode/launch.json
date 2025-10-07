@@ -31,6 +31,29 @@
             "env": {}
         },
         {
+            "name": "Debug: Uvicorn (debugpy wait-for-client)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${config:python.pythonPath}",
+            "args": [
+                "-m",
+                "debugpy",
+                "--listen",
+                "5678",
+                "--wait-for-client",
+                "-m",
+                "uvicorn",
+                "app.main:app",
+                "--reload",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Python: FastAPI (uvicorn) — debugpy attach",
             "type": "debugpy",
             "request": "attach",

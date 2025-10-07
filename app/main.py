@@ -1,11 +1,9 @@
 from fastapi import FastAPI
+import uvicorn
 
-# Import the router from the controller. Use a try/except so the module can be
-# executed both as a script (cwd=app) and as a package (uvicorn app.main:app).
-try:
-    from Controller.controler import router as controller_router
-except Exception:
-    from app.Controller.controler import router as controller_router
+# Import the router from the controller using package absolute path. This is
+# reliable both when running via `uvicorn app.main:app` and `python -m uvicorn`.
+from app.Controller.controler import router as controller_router
 
 
 app = FastAPI(
@@ -17,11 +15,8 @@ app = FastAPI(
 # Include routes from the controller
 app.include_router(controller_router)
 
-# MongoDB lifecycle events
-try:
-    from .db import connect_to_mongo, close_mongo_connection
-except Exception:
-    from db import connect_to_mongo, close_mongo_connection
+# MongoDB lifecycle events (use absolute import)
+from app.db import connect_to_mongo, close_mongo_connection
 
 
 @app.on_event("startup")
@@ -33,3 +28,6 @@ async def startup_db_client():
 async def shutdown_db_client():
     await close_mongo_connection(app)
 
+
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)

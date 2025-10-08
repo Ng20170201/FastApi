@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
-DB_NAME = os.environ.get("MONGODB_DB", "fastapi_db")
+DB_NAME = os.environ.get("MONGODB_DB", "short_url_db")
 
 
 def get_database(app):

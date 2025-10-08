@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
+from mongoengine import connect
+from app.Models.models import URLs
 
 # Import the router from the controller using package absolute path. This is
 # reliable both when running via `uvicorn app.main:app` and `python -m uvicorn`.
@@ -22,13 +24,19 @@ from app.db import connect_to_mongo, close_mongo_connection
 @app.on_event("startup")
 async def startup_db_client():
     await connect_to_mongo(app)
+    db = app.state.mongodb
 
+    # Ubacivanje dokumenta
+    existing = await db.urls.find_one({"full_url": "https://example.com"})
+    if not existing:
+        await db.urls.insert_one({"full_url": "https://example.com", "short_url": "abc123"})
+        print("✅ Dokument sačuvan u MongoDB!")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
     await close_mongo_connection(app)
 
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+

@@ -2,59 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: FastAPI",
+            "name": "FastAPI: Debug",
             "type": "debugpy",
             "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "main:app",
-                "--reload"
-            ],
-            "jinja": true
-        },
-        {
-            "name": "Python: FastAPI (uvicorn)",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "uvicorn",
+            "program": "${workspaceFolder}/venv/Scripts/uvicorn.exe",
             "args": [
                 "app.main:app",
-                "--reload",
-                "--host",
-                "127.0.0.1",
-                "--port",
-                "8000"
+                "--host", "127.0.0.1",
+                "--port", "8000"
             ],
-            "jinja": true,
+            "console": "integratedTerminal",
             "justMyCode": true,
-            "console": "integratedTerminal",
-            "env": {}
+            "subProcess": true
         },
         {
-            "name": "Debug: Uvicorn (debugpy wait-for-client)",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${config:python.pythonPath}",
-            "args": [
-                "-m",
-                "debugpy",
-                "--listen",
-                "5678",
-                "--wait-for-client",
-                "-m",
-                "uvicorn",
-                "app.main:app",
-                "--reload",
-                "--host",
-                "127.0.0.1",
-                "--port",
-                "8000"
-            ],
-            "console": "integratedTerminal",
-            "justMyCode": true
-        },
-        {
-            "name": "Python: FastAPI (uvicorn) — debugpy attach",
+            "name": "FastAPI: Attach",
             "type": "debugpy",
             "request": "attach",
             "connect": {
@@ -67,6 +29,24 @@
                     "remoteRoot": "${workspaceFolder}"
                 }
             ]
+        }
+        ,
+        {
+            "name": "FastAPI: Debug (no-reload)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "uvicorn",
+                "app.main:app",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }

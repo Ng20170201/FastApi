@@ -2,49 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "FastAPI: Debug",
+            "name": "FastAPI Debug (direct run)",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/venv/Scripts/uvicorn.exe",
-            "args": [
-                "app.main:app",
-                "--host", "127.0.0.1",
-                "--port", "8000"
-            ],
-            "console": "integratedTerminal",
-            "justMyCode": true,
-            "subProcess": true
-        },
-        {
-            "name": "FastAPI: Attach",
-            "type": "debugpy",
-            "request": "attach",
-            "connect": {
-                "host": "127.0.0.1",
-                "port": 5678
-            },
-            "pathMappings": [
-                {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "${workspaceFolder}"
-                }
-            ]
-        }
-        ,
-        {
-            "name": "FastAPI: Debug (no-reload)",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${command:python.interpreterPath}",
-            "args": [
-                "-m",
-                "uvicorn",
-                "app.main:app",
-                "--host",
-                "127.0.0.1",
-                "--port",
-                "8000"
-            ],
+            "program": "${workspaceFolder}/app/main.py",
+            "args": [],
             "console": "integratedTerminal",
             "justMyCode": true
         }
